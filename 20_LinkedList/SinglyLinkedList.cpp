@@ -9,7 +9,7 @@ public:
     Node(int value)
     {
         this->data = value;
-        next = NULL; 
+        next = NULL;
     }
 };
 
@@ -17,10 +17,10 @@ Node *head;
 
 void createList(int data)
 {
-    Node *newNode = new Node(data); 
+    Node *newNode = new Node(data);
     if (head == NULL)
     {
-        head = newNode; 
+        head = newNode;
     }
     else
     {
@@ -28,9 +28,8 @@ void createList(int data)
         while (currNode->next != NULL)
         {
             currNode = currNode->next;
-            
         }
-        currNode->next=newNode;
+        currNode->next = newNode;
     }
 }
 
@@ -43,7 +42,46 @@ void printList()
         cout << temp->data << " -> ";
         temp = temp->next;
     }
-    cout << "NULL"<<endl;
+    cout << "NULL" << endl;
+}
+
+void insertAtindex(int index, int data)
+{
+    Node *newNode = new Node(data);
+    if (index == 1)
+    {
+        newNode->next = head;
+        head = newNode;
+    }
+    else
+    {
+        Node *currNode = head;
+        for (int i = 1; i < index - 1; i++)
+        {
+            currNode = currNode->next;
+        }
+        newNode->next = currNode->next;
+        currNode->next = newNode;
+    }
+}
+
+void deleteAtIndex(int index)
+{
+    if (head == NULL || index <= 0)
+        return;
+    if (index == 1)
+    {
+        head = head->next;
+    }
+    else
+    {
+        Node *curNode = head;
+        for (int i = 1; i < index - 1; i++)
+        {
+            curNode = curNode->next;
+        }
+        curNode->next = curNode->next->next;
+    }
 }
 
 int main(int argc, char const *argv[])
@@ -56,8 +94,19 @@ int main(int argc, char const *argv[])
         int data;
         cout << "Enter number " << i + 1 << ": ";
         cin >> data;
-        createList(data); 
+        createList(data);
     }
     printList();
+    cout << "Enter the index and data to insert at given index: ";
+    int indx, dat;
+    cin >> indx >> dat;
+    insertAtindex(indx, dat);
+    printList();
+    cout << "Enter the index to delete the node: ";
+    int delIndx;
+    cin >> delIndx;
+    deleteAtIndex(delIndx);
+    printList();
+
     return 0;
 }
