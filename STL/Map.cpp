@@ -21,7 +21,8 @@ int main(int argc, char const *argv[])
         cout <<i.first<<" "<<i.second<<endl;
     }
 
-    unordered_map<int,int>um;     
+    unordered_map<int,int>um;    
+    unordered_multimap<int,int>ump; 
     
     return 0;
 }
