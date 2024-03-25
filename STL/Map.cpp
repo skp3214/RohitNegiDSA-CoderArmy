@@ -3,7 +3,7 @@
 using namespace std;
 int main(int argc, char const *argv[])
 {
-    map<int,int>m;
+    map<int,int>m; //ordered
     m.insert(make_pair(20,30));
     m.insert(make_pair(10,20));
     m.insert(make_pair(40,70));
@@ -20,5 +20,8 @@ int main(int argc, char const *argv[])
     {
         cout <<i.first<<" "<<i.second<<endl;
     }
+
+    unordered_map<int,int>um;     
+    
     return 0;
 }
