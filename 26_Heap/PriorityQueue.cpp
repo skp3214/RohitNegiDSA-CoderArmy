@@ -18,5 +18,19 @@ int main(int argc, char const *argv[])
         p.pop();
     }
 
+    priority_queue<int,vector<int>,greater<int>>q;
+    q.push(10);
+    q.push(20);
+    q.push(15);
+    q.push(5);
+    q.push(54);
+    while(!q.empty())
+    {
+        int x = q.top();
+        cout<<x<<" ";
+        q.pop();
+    }
+
+
     return 0;
 }
