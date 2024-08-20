@@ -49,6 +49,49 @@ class Trie{
         }
         return node->isEndOfWord;
     }
+
+    // Delete
+    void deleteWord(string word){
+        deleteNode(root, word, 0);
+    }
+    
+    bool deleteNode(TrieNode *node,string word,int depth){
+        if(depth==word.size()){
+            if(node->isEndOfWord==0){
+                return false;
+            }
+            else{
+                node->isEndOfWord=0;
+                // child exist or not;
+                return isEmpty(node);
+            }
+        }
+        // char exist or not
+        int index=word[depth]-'a';
+        if(node->child[index]==NULL){
+            return false;
+        }
+        else{
+            bool shouldDeleteCurrentNode=deleteNode(node->child[index],word,depth+1);
+            if(shouldDeleteCurrentNode){
+                delete node->child[index];
+                node->child[index]=NULL;
+            }
+            
+            return !node->isEndOfWord && isEmpty(node);
+        }
+    }
+
+    bool isEmpty(TrieNode *node){
+        for(int i=0;i<26;i++){
+            if(node->child[i]!=NULL){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+
 };
 
 
@@ -62,6 +105,8 @@ int main(){
     tree->insert("orange");
     tree->insert("oracle");
 
+    cout<<tree->search("app");
+    tree->deleteWord("apple");
     cout<<tree->search("app");
     return 0;
 }
