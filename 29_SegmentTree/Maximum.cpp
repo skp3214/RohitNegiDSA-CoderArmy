@@ -11,9 +11,9 @@ class SegmentTree{
         arr=input;
         n=input.size();
         tree.resize(4*n);
-        build(0,0,n-1);
+        buildMax(0,0,n-1);
     }
-    void build(int node,int start,int end){
+    void buildMax(int node,int start,int end){
         if(start==end){
             tree[node]=arr[start];
             return;
@@ -24,10 +24,10 @@ class SegmentTree{
         tree[node]=max(tree[2*node+1],tree[2*node+2]);
     }
 
-    int query(int l,int r){
-        return range(0,0,n-1,l,r);
+    int maxInRange(int l,int r){
+        return findMax(0,0,n-1,l,r);
     }
-    int range(int node,int start,int end,int l,int r){
+    int findMax(int node,int start,int end,int l,int r){
         // fully out of range
         if(start>r || end<l){
             return INT_MIN;
@@ -38,12 +38,12 @@ class SegmentTree{
         }
         // overlapping or partially in the range
         int mid=start+(end-start)/2;
-        return max(range(2*node+1,start,mid,l,r),range(2*node+2,mid+1,end,l,r));
+        return max(findMax(2*node+1,start,mid,l,r),findMax(2*node+2,mid+1,end,l,r));
     }
 
     void update(int node, int start, int end, int idx, int val) {
         if (start == end) {
-            arr[idx] = val;
+            arr[start] = val;
             tree[node] = val;
             return;
         }
@@ -53,7 +53,7 @@ class SegmentTree{
         } else {
             update(2 * node + 2, mid + 1, end, idx, val);
         }
-        tree[node] = tree[2 * node + 1] + tree[2 * node + 2];
+        tree[node] = max(tree[2 * node + 1], tree[2 * node + 2]);
     }
 };
 
@@ -70,7 +70,8 @@ int main(){
     arr.push_back(18);
 
     SegmentTree *Tree=new SegmentTree(arr);
-    cout<<Tree->query(0,2)<<endl;
-    cout<<Tree->query(3,3)<<endl;
+    cout<<Tree->maxInRange(0,2)<<endl;
+    Tree->update(0,0,6,1,10);
+    cout<<Tree->maxInRange(0,2)<<endl;
     return 0;
 }
